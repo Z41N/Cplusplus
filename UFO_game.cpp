@@ -2,35 +2,53 @@
 #include "ufo_functions.hpp"
 
 int main() {
-  std::string codeword = "codecademy";
-  std::string answer = "__________";
-  std::vector<char> incorrect;
-  bool guess = false;
-  int misses = 0;
-  char letter;
-
+  //Greet players with lame text
   greet();
 
-  while (answer != codeword && misses<7) {
+  //Declare varz
+  std::string codeword = "blacklivesmatter";
+  std::string answer = "________________";
+  int misses = 0;
+  std::vector<char> incorrect;
+  bool guess = false;
+  char letter;
+
+  //The actual game system
+  while (misses < 7 && answer != codeword) {
     display_misses(misses);
-    display_status(incorrect, answer);
-    std::cout<<"\n\nPlease enter your guess: ";
+
+    std::cout<<"\nIncorrect guesses:\n";
+    for (int i=0; i<incorrect.size();i++) {
+      std::cout<<incorrect[i]<<' ';
+    }
+
+    std::cout<<"\nCodeword:\n";
+    for (int i=0; i<answer.length();i++) {
+      std::cout<<answer[i]<<' ';
+    }
+
+    std::cout<<"\nEnter your guess:\n";
     std::cin>>letter;
+
     for (int i=0; i<codeword.length();i++) {
-      if (letter == codeword[i]) {
+      if (codeword[i] == letter) {
         answer[i] = letter;
         guess = true;
       }
     }
+
     if (guess) {
-      std::cout<<"\nCorrect!";
+      std::cout<<"\nCorrect!\n";
     } else {
-      std::cout<<"\nWRONG.";
+      std::cout<<"\nWRONG!\n";
       incorrect.push_back(letter);
       misses++;
     }
     guess = false;
   }
 
+  //Check for win/loss
   end_game(answer, codeword);
+
+
 }
