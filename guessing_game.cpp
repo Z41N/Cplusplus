@@ -1,6 +1,8 @@
 #include <iostream>
-#include "garbage.hpp"
+#include "guessing.hpp"
 #include <string>
+#include <vector>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -28,7 +30,7 @@ int main() {
             continue;
         } else if (user_choice == 2) {
             cout<<"\n---INSTRUCTIONS---\n";
-            cout<<"You have 3 tries to enter a number between 0 and 10 to guess what the computer outputted\n";
+            cout<<"You have 10 tries to enter a number between 0 and 10 to guess what the computer outputted\n";
             cout<<"---END INSTRUCTIONS---\n";
         }
     } while(user_choice != 0);
