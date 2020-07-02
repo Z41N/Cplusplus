@@ -1,44 +1,29 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
-using std::cout;
-using std::cin;
-using std::endl;
-
-// int get_current_score() {
-//     std::ifstream file;
-//     file.open("high_score.txt");
-//     int input;
-//     int current_high_score;
-//     while (file>>input) {
-//         current_high_score = input;
-//     }
-//     return current_high_score;
-// }
-
 
 
 void play_game() {
     int answer;
     int guess;
-    int guesses[3];
     int misses = 0;
     srand (time(NULL));
     answer = rand() % 11;
-    cout<<"---GAME STARTED---\n";
-    cout<<"Enter your guess (0 - 10): ";
-
+    std::cout<<"---GAME STARTED---\n";
+    std::cout<<"Enter your guess (0 - 10): ";
+    // While loop to continue going as long as conditions are not met
+    // (10 - misses) used because we want to get the remainder # of tries
     while (true && misses < 10 && guess != answer) {
-        cin>>guess;
+        std::cin>>guess;
         if (guess == answer) {
             misses++;
-            cout<<">YOU WIN!!! The answer was "<<answer<<"."<<endl;
+            std::cout<<">YOU WIN!!! The answer was "<<answer<<"."<<std::endl;
         } else if (guess > answer) {
             misses++;
-            cout<<"Too high!"<<" You have "<<(10-misses)<<" tries left.\n";
+            std::cout<<"Too high!"<<" You have "<<(10-misses)<<" tries left.\n";
         } else if (guess < answer) {
             misses++;
-            cout<<"Too low!"<<" You have "<<(10-misses)<<" tries left.\n";
+            std::cout<<"Too low!"<<" You have "<<(10-misses)<<" tries left.\n";
         }
     }
 
@@ -46,31 +31,33 @@ void play_game() {
     input.open("high_score.txt");
     int current_score;
     input >> current_score;
-    
-    std::ofstream output;
-    output.open("high_score.txt");
-
-    if (misses == 10) {
-        cout<<"\n>YOU LOSE. The answer was "<<answer<<"."<<endl;
-    }
 
     if (misses < current_score) {
+        std::cout<<"Nice, you did better";
+        std::ofstream output;
+        output.open("high_score.txt");
         output << misses;
-        if (misses == 1) {
-            cout<<">BEST SCORE: "<<misses<<" try."<<endl;
-        } else {
-            cout<<">BEST SCORE: "<<misses<<" tries."<<endl;
-        }
-    } else {
-        output << current_score;
-        if (current_score == 1) {
-            cout<<">BEST SCORE: "<<current_score<<" try."<<endl;
-        } else {
-            cout<<">BEST SCORE: "<<current_score<<" tries."<<endl;
-        }
-    }
-    
 
+    } else {
+        std::cout<<"Your score is unchanged";
+    }
+
+    // Rank system START: IN PROGRESS
+    std::ofstream ranks;
+    ranks.open("ranks.txt");
+    if (misses <= 1) {
+        std::cout<<">You've been promoted to Diamond!!!\n";
+        ranks<<"Diamond";
+    } else if (misses >= 2 && misses <= 5) {
+        std::cout<<">Your rank has been changed to Gold!\n";
+        ranks<<"Gold";
+    } else if (misses >= 6 && misses <= 8) {
+        std::cout<<">Your rank has been changed to Silver!\n";
+        ranks<<"Silver";
+    } else if (misses >= 9 || misses == 10) {
+        std::cout<<">Your rank has been changed to Bronze.\n";
+        ranks<<"Bronze";
+    }
 }
 
 
